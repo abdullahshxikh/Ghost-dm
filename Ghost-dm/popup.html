@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost DM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="popup-container">
+    <div class="header">
+      <img src="icon.png" alt="Ghost DM" class="logo">
+      <h1>Ghost DM</h1>
+    </div>
+    
+    <div class="content">
+      <div class="feature-item">
+        <div class="feature-info">
+          <div class="feature-header">
+            <span class="status-indicator" id="statusIndicator">⚪</span>
+            <h3>Ghost Mode</h3>
+          </div>
+          <p>Block Instagram read receipts</p>
+        </div>
+        <div class="toggle-container">
+          <input type="checkbox" id="ghostToggle" class="toggle-input">
+          <label for="ghostToggle" class="toggle-label">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="status" id="status">
+        <span class="status-text" id="statusText">Checking status...</span>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Maintain privacy in your DMs</p>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
