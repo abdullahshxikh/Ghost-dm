@@ -2,13 +2,51 @@
   {
     "id": 1,
     "priority": 1,
-    "action": {
-      "type": "block"
-    },
+    "action": { "type": "block" },
     "condition": {
-      "urlFilter": "*/direct_v2/threads/*/seen",
-      "domains": ["instagram.com"],
-      "resourceTypes": ["xmlhttprequest"]
+      "urlFilter": "*://*.instagram.com/api/v1/direct_v2/threads/*/seen*",
+      "domains": ["instagram.com", "www.instagram.com", "i.instagram.com"],
+      "resourceTypes": ["xmlhttprequest", "ping"]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*://*.instagram.com/api/v1/direct_v2/threads/*/items/*/seen*",
+      "domains": ["instagram.com", "www.instagram.com", "i.instagram.com"],
+      "resourceTypes": ["xmlhttprequest", "ping"]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*://*.instagram.com/api/v1/direct_v2/inbox/mark_seen*",
+      "domains": ["instagram.com", "www.instagram.com", "i.instagram.com"],
+      "resourceTypes": ["xmlhttprequest", "ping"]
+    }
+  },
+  {
+    "id": 4,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*://*.instagram.com/api/v1/direct_v2/mark_seen*",
+      "domains": ["instagram.com", "www.instagram.com", "i.instagram.com"],
+      "resourceTypes": ["xmlhttprequest", "ping"]
+    }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "*://*.instagram.com/web/direct_v2/*seen*",
+      "domains": ["instagram.com", "www.instagram.com", "i.instagram.com"],
+      "resourceTypes": ["xmlhttprequest", "ping"]
     }
   }
 ] 

@@ -14,24 +14,28 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 // Initialize on startup
 chrome.runtime.onStartup.addListener(async () => {
-  await initializeGhostMode();
+  await initializeGhostMode(true);
 });
 
 // Initialize when service worker starts
 (async () => {
-  await initializeGhostMode();
+  await initializeGhostMode(true);
 })();
 
 /**
  * Initialize Ghost Mode based on stored state
  */
-async function initializeGhostMode() {
+async function initializeGhostMode(shouldInjectTabs = false) {
   try {
     const result = await chrome.storage.sync.get(['ghostMode']);
     const ghostMode = result.ghostMode || false;
     
     if (ghostMode) {
       await enableRuleset();
+      if (shouldInjectTabs) {
+        await injectContentScriptToAllInstagramTabs();
+        notifyContentScripts(true);
+      }
     } else {
       await disableRuleset();
     }
@@ -108,13 +112,18 @@ async function disableRuleset() {
 }
 
 /**
- * Inject content script into active tab
+ * Inject content scripts into active tab
  */
 async function injectContentScriptToActiveTab() {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     
     if (tab && tab.url && tab.url.includes('instagram.com')) {
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['early-inject.js'],
+        world: 'MAIN'
+      });
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         files: ['content.js']
@@ -126,7 +135,7 @@ async function injectContentScriptToActiveTab() {
 }
 
 /**
- * Inject content script into all Instagram tabs
+ * Inject content scripts into all Instagram tabs
  */
 async function injectContentScriptToAllInstagramTabs() {
   try {
@@ -134,6 +143,11 @@ async function injectContentScriptToAllInstagramTabs() {
     
     for (const tab of tabs) {
       try {
+        await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['early-inject.js'],
+          world: 'MAIN'
+        });
         await chrome.scripting.executeScript({
           target: { tabId: tab.id },
           files: ['content.js']
